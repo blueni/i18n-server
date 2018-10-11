@@ -1,0 +1,39 @@
+{
+  "name": "i18n-server",
+  "version": "1.0.0",
+  "description": "i18n翻译工具",
+  "main": "server.js",
+  "scripts": {
+    "i18n-server": "node server.js",
+    "i18n-client": "node_modules\\.bin\\parcel index.html --out-dir i18n-dist",
+    "i18n": "npm run i18n-client | npm run i18n-server"
+  },
+  "bin": {
+    "i18n": "cli.js"
+  },
+  "keywords": [
+    "i18n",
+    "i18n-server"
+  ],
+  "author": "blueni",
+  "license": "MIT",
+  "dependencies": {
+    "parcel": "^1.10.2",
+    "promise-polyfill": "^8.1.0",
+    "vue": "^2.5.17",
+    "vue-hot-reload-api": "^2.3.1",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.2.0",
+    "fast-glob": "^2.2.3",
+    "koa": "^2.5.3",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "less": "^3.8.1",
+    "request-promise": "^4.2.2",
+    "vue-template-compiler": "^2.5.17"
+  }
+}
