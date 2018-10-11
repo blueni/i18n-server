@@ -25,6 +25,7 @@
     "koa-static": "^5.0.0",
     "parcel": "^1.10.2",
     "promise-polyfill": "^8.1.0",
+    "request-promise": "^4.2.2",
     "vue": "^2.5.17",
     "vue-hot-reload-api": "^2.3.1",
     "vue-router": "^3.0.1",
@@ -33,7 +34,6 @@
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.2.0",
     "less": "^3.8.1",
-    "request-promise": "^4.2.2",
     "vue-template-compiler": "^2.5.17"
   },
   "repository": {
