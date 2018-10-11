@@ -1,6 +1,6 @@
 {
   "name": "i18n-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "i18n翻译工具",
   "main": "server.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "koa-static": "^5.0.0",
     "parcel": "^1.10.2",
     "promise-polyfill": "^8.1.0",
-		"request": "^2.85.0",
+    "request": "^2.85.0",
     "request-promise": "^4.2.2",
     "vue": "^2.5.17",
     "vue-hot-reload-api": "^2.3.1",
