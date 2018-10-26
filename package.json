@@ -1,6 +1,6 @@
 {
   "name": "i18n-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "i18n翻译工具",
   "main": "server.js",
   "scripts": {
