@@ -140,7 +140,7 @@ export default {
     
     mounted(){
         this.selectReferrerLang = this.currentLang
-        this.transferLangs = this.langs.slice().filter(v => v != this.currentLang)
+        this.transferLangs = this.langs.slice(0, 4).filter(v => v != this.currentLang)
         this.$store.commit('transferTo', this.transferLangs)
         this.selectedApi = this.currentApi
 
@@ -218,7 +218,7 @@ export default {
         changeReferrerLang(){
             let lang = this.selectReferrerLang
             this.$store.commit('currentLang', lang)
-            this.$store.commit('transferTo', this.langs.slice().filter(v => v != lang))
+            this.$store.commit('transferTo', this.transferTo.slice().filter(v => v != lang))
             this.transferLangs = this.transferTo
         },
 

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Promise from 'promise-polyfill'
+import { langs } from './lang-config'
 
 import App from './i18n-app.vue'
 
@@ -17,7 +18,7 @@ const router = new VueRouter({
 const store = new Vuex.Store({
     state: {
         currentFile: '',
-        langs: ['CN', 'EN', 'KR'],
+        langs,
         currentLang: 'CN',
         transferTo: [],
         originI18nData: null,

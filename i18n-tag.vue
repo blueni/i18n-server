@@ -11,31 +11,16 @@
             :class="{modified: item.value !== origin.others[index].value}"
         >
             <span class="lang">{{ item.lang }}：</span>
-            <span class="auto-transfer" @click="autoTransfer(item)">自动翻译</span>
+            <span v-if="hasTransferApi(item.lang)" class="auto-transfer" @click="autoTransfer(item)">自动翻译</span>
             <textarea @change="changeText" type="text" v-model="item.value"></textarea>
         </div>
     </dd>
 </template>
 
 <script>
+import { baiduLangMap, youdaoLangMap, makeQuery} from './lang-config'
 export default {
     name: 'i18n-tag',
-
-    data(){
-        return {
-            baidulangMap: {
-                CN: 'zh',
-                EN: 'en',
-                KR: 'kor',
-            },
-
-            youdaoLangMap: {
-                CN: 'ZH_CN',
-                EN: 'EN',
-                KR: 'KR',
-            },
-        }
-    },
 
     props: {
         lang: String,
@@ -83,51 +68,20 @@ export default {
 
         autoTransfer(target){
             let transferApi = this.transferApi
-            if(transferApi === 'baidu'){
-                this.baiduTransfer(target)
-            }else if(transferApi === 'youdao'){
-                this.youdaoTransfer(target)
-            }
-        },
-
-        baiduTransfer(target){
-            let from = this.baidulangMap[this.lang]
-            let to = this.baidulangMap[target.lang]
-            let query = this.current
-            let transfer_api = this.transferApi
-            $.get('/transfer-api', {
-                from,
-                to,
-                query,
-                transfer_api,
-            }).then(res => {
+            let obj = makeQuery(this.lang, target.lang, this.current, transferApi)
+            $.get('/transfer-api', obj.query).then(res => {
                 res = JSON.parse(res)
-                target.value = res.data[0].dst
+                target.value = obj.rule(res)
                 this.$store.commit('editing', true)
                 this.$emit('change', this.others)
                 this.$forceUpdate()
-            })            
+            })
         },
 
-        youdaoTransfer(target){
-            let youdaoLangMap = this.youdaoLangMap
-            let doctype = 'json'
-            let type = `${youdaoLangMap[this.lang]}2${youdaoLangMap[target.lang]}`
-            let i = this.current
-            let transfer_api = this.transferApi
-            $.get('/transfer-api', {
-                doctype,
-                type,
-                i,
-                transfer_api,
-            }).then(res => {
-                res = JSON.parse(res)
-                target.value = res.translateResult[0][0].tgt
-                this.$store.commit('editing', true)
-                this.$emit('change', this.others)
-                this.$forceUpdate()
-            })     
+        hasTransferApi(lang){
+            return this.transferApi === 'baidu' ? baiduLangMap[lang] : youdaoLangMap[lang]
         },
+        
     },
 
 }

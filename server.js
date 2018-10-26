@@ -167,6 +167,11 @@ app.use(router.allowedMethods())
 
 app.use(static(path.join(__dirname, 'i18n-dist')))
 
-app.listen(1266, () => {
-    console.log('I18n Service running at http://localhost:1266')
-})
+module.exports = function(){ 
+    return new Promise((resolve) => {
+        app.listen(1266, () => {
+            console.log('I18n Service running at http://localhost:1266')
+            resolve()
+        })
+    })
+}

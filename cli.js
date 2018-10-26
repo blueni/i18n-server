@@ -1,31 +1,20 @@
 #!/usr/bin/env node
 
-require('./server')
-const path = require('path')
-const os = require('os')
-const { spawn } = require('child_process')
+const Bundler = require('parcel-bundler')
+const opn = require('opn')
+const server = require('./server')
+let [, , env = 'production'] = process.argv
 
-const sep = path.sep
+const isDevelopment = env.indexOf('dev') >= 0
+const autoOpen = /open|start/.test(env)
 
-function runCommand(command, args = [], options){
-    let cmd = command
-    if(os.platform() === 'win32'){
-        args.unshift('/c', command)
-        cmd = 'cmd.exe'
-    }
-
-    options = Object.assign({
-        env: process.env,
-        stdio: [0, 1, 2],
-        cwd: __dirname,
-    }, options)
-    return new Promise((resolve, reject) => {
-        spawn(cmd, args, options)
-            .on('exit', resolve)
-            .on('close', resolve)
-            .on('error', reject)
+;(async () => {
+    process.chdir(__dirname)
+    let bundler = new Bundler('index.html', {
+        outDir: 'i18n-dist',
+        production: !isDevelopment,
     })
-}
-
-let parcelCmd = `node_modules${sep}.bin${sep}parcel`
-runCommand(parcelCmd, ['index.html', '--out-dir', 'i18n-dist'])
+    await bundler.bundle()
+    await server()
+    autoOpen && opn('http://localhost:1266')
+})()
